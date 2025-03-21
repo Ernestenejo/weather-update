@@ -15,12 +15,15 @@ exports.getWeather = async (req, res) => {
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${SECRET_KEY}&units=metric`
         )
 
-        const { name, main, weather, wind } = response.data;
+        const { name, sys, main, weather, wind } = response.data;
+
+       
         const weatherData = new Weather({
-            city: name,
+            city: `${name},${sys.country}`,
             temperature: main.temp,
             condition: weather[0].description,
             wind_Speed: wind.speed,
+            humidity: main.humidity,
             date: new Date()
         })
 
@@ -29,10 +32,11 @@ exports.getWeather = async (req, res) => {
          res.status(200).json({
             message: 'Weather update',
             data: {
-                city: name,
+                city: `${name},${sys.country}`,
                 temperature: main.temp,
                 condition: weather[0].description,
-                wind_Speed: wind.speed
+                wind_Speed: wind.speed,
+                humidity: main.humidity
             }
         });
     } catch (error) {

@@ -16,6 +16,10 @@ const weatherSchema = new mongoose.Schema({
     wind_Speed:{
         type: Number,
         required: true
+    },
+    humidity:{
+        type: Number,
+        required: true
     }
 }, {timestamps: true});
 
